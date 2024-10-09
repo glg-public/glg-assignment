@@ -1,0 +1,127 @@
+services:
+  # runs on 1025, 1080 for dashboard
+  mailhog:
+    image: mailhog/mailhog
+    logging:
+      driver: "none"
+    ports:
+      - "1025:1025" # smtp server
+      - "1080:8025" # web ui
+    entrypoint: ["/bin/sh", "-c", "MailHog &>/dev/null"]
+
+  # runs on 9324, 9325 for dashboard
+  sqs:
+    image: softwaremill/elasticmq
+    profiles: ["dev"]
+    ports:
+      - "9325:9325"
+    container_name: sqs
+    volumes:
+      - sqs_data:/var/lib/elasticmq
+      - ./elasticmq.conf:/etc/elasticmq/elasticmq.conf
+    command: -Dconfig.file=/etc/elasticmq/elasticmq.conf
+
+  dynamodb:
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal/data"
+    image: "amazon/dynamodb-local:latest"
+    profiles: ["dev", "setup"]
+    container_name: dynamodb
+    user: root
+    environment:
+      - "JAVA_OPTS=-Xms512m -Xmx1024m"
+    volumes:
+      - "dynamodb_data:/home/dynamodblocal/data"
+    working_dir: /home/dynamodblocal
+
+  app:
+    image: glg-sse-interview-app
+    profiles: ["dev"]
+    tty: true
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    volumes:
+      - ./app/:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file:
+      - ./etc/dev.env
+    ports:
+      - "9000:9000"
+    depends_on:
+      - dynamodb
+
+  project-setup:
+    image: glg-sse-interview-pipeline
+    profiles: ["setup"]
+    tty: true
+    build:
+      context: ./pipeline
+      dockerfile: Dockerfile
+    volumes:
+      - ./pipeline/:/usr/src/app
+      - /usr/src/app/node_modules
+      - ./tmp:/otmp
+    env_file:
+      - ./etc/dev.env
+    depends_on:
+      - dynamodb
+    environment:
+      - INSTANCE_TYPE=project-setup
+    command: npm run run:docker
+
+  order-intake:
+    image: glg-sse-interview-pipeline
+    profiles: ["dev"]
+    tty: true
+    build:
+      context: ./pipeline
+      dockerfile: Dockerfile
+    volumes:
+      - ./pipeline/:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file:
+      - ./etc/dev.env
+    depends_on:
+      - dynamodb
+    environment:
+      - INSTANCE_TYPE=order-intake
+
+  order-processor:
+    image: glg-sse-interview-pipeline
+    profiles: ["dev"]
+    tty: true
+    build:
+      context: ./pipeline
+      dockerfile: Dockerfile
+    volumes:
+      - ./pipeline/:/usr/src/app
+      - /usr/src/app/node_modules
+      - ./tmp:/otmp
+    env_file:
+      - ./etc/dev.env
+    depends_on:
+      - dynamodb
+    environment:
+      - INSTANCE_TYPE=order-processor
+
+  order-emailer:
+    image: glg-sse-interview-pipeline
+    profiles: ["dev"]
+    tty: true
+    build:
+      context: ./pipeline
+      dockerfile: Dockerfile
+    volumes:
+      - ./pipeline/:/usr/src/app
+      - /usr/src/app/node_modules
+      - ./tmp:/otmp
+    env_file:
+      - ./etc/dev.env
+    depends_on:
+      - dynamodb
+    environment:
+      - INSTANCE_TYPE=order-emailer
+
+volumes:
+  dynamodb_data:
+  sqs_data:

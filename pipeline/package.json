@@ -1,0 +1,47 @@
+{
+  "name": "@glg-public/sse-interview-pipeline",
+  "version": "1.0.0",
+  "description": "example processing pipeline for interview tasks",
+  "scripts": {
+    "start:docker": "nodemon $NODE_DEBUG_OPTION src/index.ts",
+    "run:docker": "ts-node src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glg-public/software-support-engineer-interview.git"
+  },
+  "author": "GLG",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/glg-public/software-support-engineer-interview/issues"
+  },
+  "homepage": "https://github.com/glg-public/software-support-engineer-interview#readme",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.658.1",
+    "@aws-sdk/client-sqs": "^3.658.1",
+    "@aws-sdk/lib-dynamodb": "^3.658.1",
+    "@react-pdf/renderer": "^3.4.5",
+    "axios": "^1.7.7",
+    "chalk": "^4.1.2",
+    "chance": "^1.1.12",
+    "nodemailer": "^6.9.15",
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/chance": "^1.1.6",
+    "@types/nodemailer": "^6.4.16",
+    "@types/react": "^18.3.11",
+    "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  },
+  "nodemonConfig": {
+    "execMap": {
+      "ts": "node --require ts-node/register/transpile-only"
+    },
+    "watch": [
+      "src"
+    ],
+    "legacyWatch": true
+  }
+}

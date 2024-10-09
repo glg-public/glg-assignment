@@ -1,0 +1,46 @@
+{
+  "name": "@glg-public/sse-interview-app",
+  "version": "1.0.0",
+  "description": "support rest api for interview tasks",
+  "scripts": {
+    "start:docker": "nodemon $NODE_DEBUG_OPTION src/server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glg-public/software-support-engineer-interview.git"
+  },
+  "author": "GLG",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/glg-public/software-support-engineer-interview/issues"
+  },
+  "homepage": "https://github.com/glg-public/software-support-engineer-interview#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.7.4",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.6",
+    "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.658.1",
+    "@aws-sdk/client-sqs": "^3.658.1",
+    "@aws-sdk/lib-dynamodb": "^3.658.1",
+    "axios": "^1.7.7",
+    "chalk": "^4.1.2",
+    "express": "^4.21.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.3"
+  },
+  "nodemonConfig": {
+    "execMap": {
+      "ts": "node --require ts-node/register/transpile-only"
+    },
+    "watch": [
+      "src"
+    ],
+    "legacyWatch": true
+  }
+}

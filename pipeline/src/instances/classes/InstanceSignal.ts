@@ -1,0 +1,5 @@
+export enum InstanceSignal {
+  KILL_SWITCH = "KILL_SWITCH",
+  ERROR_SHUTDOWN = "ERROR_SHUTDOWN",
+  CLEAN_SHUTDOWN = "CLEAN_SHUTDOWN"
+}
