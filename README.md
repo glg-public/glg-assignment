@@ -52,8 +52,8 @@ Mac: https://docs.docker.com/desktop/install/mac-install/
 
 ### 1. Clone the Repository
 ```sh
-git clone git@github.com:glg-public/software-support-engineer-interview-project.git
-cd software-support-engineer-interview-project
+git clone git@github.com:glg-public/glg-assignment.git
+cd glg-assignment
 ```
 
 ### 2. Setup the Project
