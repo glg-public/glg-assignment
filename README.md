@@ -4,8 +4,11 @@
 ## Overview
 
 This project is a rudimentary order processing system that accepts orders via a REST API (with Express, documented using Swagger) 
-and processes them through a series of queues (using ElasticMQ behind an SQS Client). The system generates an order, 
-processes it to create a PDF receipt, and sends the receipt via email to the customer. The system is designed with message 
+and processes them through a series of queues (using ElasticMQ behind an SQS Client). Data in this project is stored in DynamoDB.
+All components of this project are containerized using Docker and orchestrated using Docker Compose and run entirely on your local machine.
+
+
+The system generates an order, processes it to create a PDF receipt, and sends the receipt via email to the customer. The system is designed with message 
 queues to handle jobs asynchronously and decouple different parts of the processing flow.
 
 ### Features
@@ -45,9 +48,13 @@ queues to handle jobs asynchronously and decouple different parts of the process
 ## Setup
 
 ### 0. Prerequisites
-Install Docker and Docker Compose on your machine, if you haven't already.
+Install Docker and Docker Compose on your machine, if you haven't already. If you are using a Windows machine, you may
+need to install WSL2 to run Docker Desktop or update your BIOS settings to enable virtualization.
+
+If prompted to enable file sharing in Windows, please accept the prompt.
 
 Windows: https://docs.docker.com/desktop/install/windows-install/
+
 Mac: https://docs.docker.com/desktop/install/mac-install/
 
 ### 1. Clone the Repository
@@ -65,6 +72,11 @@ cd glg-assignment
 ```sh
 ./bin/run.sh
 ```
+
+## URLs
+- REST API: http://localhost:9000
+- Local Mail Server (Mailhog): http://localhost:1080
+- ElasticMQ (Debug): http://localhost:9325
 
 ## Tasks
 Please complete the exercises found in [TASKS.md](TASKS.md).
