@@ -57,9 +57,9 @@ Windows: https://docs.docker.com/desktop/install/windows-install/
 
 Mac: https://docs.docker.com/desktop/install/mac-install/
 
-### 1. Clone the Repository
+### 1. Fork/Clone the Repository
 ```sh
-git clone git@github.com:glg-public/glg-assignment.git
+git clone git@github.com:your-github/glg-assignment.git
 cd glg-assignment
 ```
 
