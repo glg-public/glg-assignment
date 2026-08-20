@@ -19,7 +19,11 @@ services:
     volumes:
       - sqs_data:/var/lib/elasticmq
       - ./elasticmq.conf:/etc/elasticmq/elasticmq.conf
-    command: -Dconfig.file=/etc/elasticmq/elasticmq.conf
+    entrypoint:
+      - java
+      - -Dconfig.file=/etc/elasticmq/elasticmq.conf
+      - -jar
+      - /opt/elasticmq/elasticmq-server.jar
 
   dynamodb:
     command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal/data"
