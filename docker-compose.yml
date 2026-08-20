@@ -19,6 +19,7 @@ services:
     volumes:
       - sqs_data:/var/lib/elasticmq
       - ./elasticmq.conf:/etc/elasticmq/elasticmq.conf
+    # added entrypoint override to prevent elasticmq.conf from being ignored, which prevents queue creation
     entrypoint:
       - java
       - -Dconfig.file=/etc/elasticmq/elasticmq.conf
