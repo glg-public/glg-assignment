@@ -17,12 +17,12 @@ export interface Order {
 }
 
 export class OrderFactory {
-  public static createOrder(params: Pick<Order, "userId" | "referenceId" | "amount">): Order {
+  public static createOrder(params: Pick<Order, "userId" | "referenceId">): Order {
     return {
       orderId: randomUUID(),
       userId: params.userId,
       referenceId: params.referenceId,
-      amount: params.amount,
+      amount: 0, // Will be calculated after items are generated
       status: OrderStatus.PROCESSING,
       createdAt: Date.now(),
       updatedAt: Date.now(),
